@@ -8,4 +8,5 @@ urlpatterns = patterns('',
     url(r'^add/book/$', views.add_book, name='add_book'),
     url(r'^add/library/$', views.add_library, name='add_library'),
     url(r'^add/book/submit/$', views.submit_book, name='submit_book'),
+    url(r'^add/library/submit/$', views.submit_library, name='submit_library'),
 )

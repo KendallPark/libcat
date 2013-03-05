@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Library Catalog: Library Added Successfully{% endblock %}
+    
+{% block sidebar %}{{ block.super }}{% endblock %}
+    
+{% block content %}
+
+<p>The <a href="/catalog/library/{{library.id}}/">{{library.name}}</a> was successfully added to the catalog.</p>
+
+<p><a href="/catalog/add/library/">Add another library</a></p>
+{% endblock %}

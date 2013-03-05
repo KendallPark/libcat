@@ -20,6 +20,8 @@ def libpage(request, lib_id):
         raise Http404
     try:
         topbook = Book.objects.filter(owner=library).order_by('hits')[::-1][0]
+    except IndexError:
+        topbook = None
     except Book.DoesNotExist:
         raise Http404
     return render(request, 'catalog/library.html', {'library':library, 'topbook':topbook})
@@ -44,9 +46,19 @@ def add_library(request):
 def submit_book(request):
     try:
         f = BookForm(request.POST)
-        new_book = f.save()
+        book = f.save()
     except ValueError:
         bookform = BookForm()
         return render(request, 'catalog/add_book.html', {'bookform':bookform, 'err': "Missing Field Data",})
     else:
-        return render(request, 'catalog/book_submit.html', {'book':new_book,})
+        return render(request, 'catalog/book_submit.html', {'book':book,})
+
+def submit_library(request):
+    try:
+        f = LibraryForm(request.POST)
+        library = f.save()
+    except ValueError:
+        libform = LibraryForm()
+        return render(request, 'catalog/add_library.html', {'libform':libform, 'err': "Missing Field Data",})
+    else:
+        return render(request, 'catalog/library_submit.html', {'library':library,})

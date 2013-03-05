@@ -8,7 +8,7 @@
     
     {% block content %}
     <h1>{{ library.name }}</h1>
-    <p>Most Popular Book: <a href="/catalog/book/{{topbook.id}}/">{{ topbook.title }} by {{ topbook.author }}</a></p>
+    <p>Most Popular Book: {% if topbook %}<a href="/catalog/book/{{topbook.id}}/">{{ topbook.title }} by {{ topbook.author }}</a>{% else %}This library does not have any books.{% endif %}</p>
 
     {% endblock %}
 {% else %}
