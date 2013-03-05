@@ -1,0 +1,11 @@
+{% if book %}
+	<h1>{{ book.title }}</h1>
+	<ul>
+	    <li>{{ book.owner.name }}</li>
+	</ul>
+{% else %}
+	<h1>Book Title</h1>
+	<ul>
+	    <li>Library</li>
+	</ul>
+{% endif %}
