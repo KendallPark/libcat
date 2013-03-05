@@ -2,7 +2,7 @@ from django.http import HttpResponse, Http404
 from django.template import Context, loader
 from django.shortcuts import render, get_object_or_404
 
-from catalog.models import Book, Library, BookForm
+from catalog.models import Book, Library, BookForm, LibraryForm
 
 def index(request):
     lastest_book_list = Book.objects.order_by('isbn')[:5]
@@ -34,6 +34,19 @@ def bookpage(request, book_id):
     return render(request, 'catalog/book.html', {'book':book})
 
 def add_book(request):
-    f = BookForm(request.POST)
-    new_book = f.save()
-    return HttpResponse("Book Added")
+    bookform = BookForm()
+    return render(request, 'catalog/add_book.html', {'bookform':bookform})
+
+def add_library(request):
+    libform = LibraryForm()
+    return render(request, 'catalog/add_library.html', {'libform':libform})
+
+def submit_book(request):
+    try:
+        f = BookForm(request.POST)
+        new_book = f.save()
+    except ValueError:
+        bookform = BookForm()
+        return render(request, 'catalog/add_book.html', {'bookform':bookform, 'err': "Missing Field Data",})
+    else:
+        return render(request, 'catalog/book_submit.html', {'book':new_book,})

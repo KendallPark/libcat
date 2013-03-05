@@ -3,10 +3,12 @@
 {% if library %}
 
     {% block title %}Library Catalog: {{ library.name }}{% endblock %}
-    {% block sidebar %}{% endblock %}
+    
+    {% block sidebar %}{{ block.super }}{% endblock %}
+    
     {% block content %}
     <h1>{{ library.name }}</h1>
-    <h3>Most Popular Book: {{ topbook.title }} by {{ topbook.author }}</h3>
+    <p>Most Popular Book: <a href="/catalog/book/{{topbook.id}}/">{{ topbook.title }} by {{ topbook.author }}</a></p>
 
     {% endblock %}
 {% else %}
