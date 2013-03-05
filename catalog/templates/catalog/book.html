@@ -1,8 +1,17 @@
+{% extends "base.html" %}
+
 {% if book %}
-	<h1>{{ book.title }}</h1>
-	<h2>by {{ book.author }}
-	<h3>Owner: {{ book.owner.name }}</h2>
+
+    {% block title %}Library Catalog {{ book.title }} by {{ book.author }}{% endblock %}
+    {% block sidebar %}{% endblock %}
+    {% block content %}
+    <h1>{{ book.title }}</h1>
+    <h2>by {{ book.author }}</h2>
+    <h3>ISBN: {{ book.isbn }}</h3>
+    <h3>Owner: {{ book.owner.name }}</h3>
+    <h3>Available for Interlibrary Loan: {% if book.loan %} Yes {% else %} No {% endif %}</h3>
+    {% endblock %}
 {% else %}
-	<h1>Oops!</h1>
-	<p>The book you're looking for doesn't seem to exist in our catalog. Please go back and try again.</p>
+    <h1>Oops!</h1>
+    <p>The book you're looking for doesn't seem to exist in our catalog. Please go back and try again.</p>
 {% endif %}
