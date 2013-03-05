@@ -62,3 +62,20 @@ def submit_library(request):
         return render(request, 'catalog/add_library.html', {'libform':libform, 'err': "Missing Field Data",})
     else:
         return render(request, 'catalog/library_submit.html', {'library':library,})
+
+def search(request):
+    if 'q' in request.GET:
+        q = request.GET['q']
+    else:
+        return HttpResponse("No query")
+    try:
+        books = Book.objects.filter(title__contains=q)
+        print books
+        if not books: # checks if there are no title results
+            try:
+                books = Book.objects.all().filter(isbn=q)
+            except ValueError:
+                pass
+    except Book.DoesNotExist:
+        raise Http404
+    return render(request, 'catalog/search_results.html', {'q':q, 'books':books,})
