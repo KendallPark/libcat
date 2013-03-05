@@ -1,11 +1,8 @@
 {% if book %}
 	<h1>{{ book.title }}</h1>
-	<ul>
-	    <li>{{ book.owner.name }}</li>
-	</ul>
+	<h2>by {{ book.author }}
+	<h3>Owner: {{ book.owner.name }}</h2>
 {% else %}
-	<h1>Book Title</h1>
-	<ul>
-	    <li>Library</li>
-	</ul>
+	<h1>Oops!</h1>
+	<p>The book you're looking for doesn't seem to exist in our catalog. Please go back and try again.</p>
 {% endif %}

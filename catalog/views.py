@@ -2,7 +2,7 @@ from django.http import HttpResponse, Http404
 from django.template import Context, loader
 from django.shortcuts import render, get_object_or_404
 
-from catalog.models import Book, Library
+from catalog.models import Book, Library, BookForm
 
 def index(request):
 	lastest_book_list = Book.objects.order_by('isbn')[:5]
@@ -17,15 +17,14 @@ def libpage(request, lib_id):
 	return HttpResponse("Library page for %s." % lib_id)
 
 def bookpage(request, book_id):
-	book = Book(title="Hello World", owner=Library(name="U-City"), isbn="10120330101")
+	try:
+		book = Book.objects.get(id=book_id)
+	except Book.DoesNotExist:
+		raise Http404
+	#book = Book(title="Hello World", owner=Library(name="U-City"), isbn="10120330101")
 	return render(request, 'catalog/book.html', {'book': book})
 
 def add_book(request):
-	'''try:
-		title = request.POST['title']
-		author = request.POST['author']
-		isbn = request.POST['isbn']
-		owner = request.POST['library']
-		loan = request.POST['loan']
-	except (KeyError, )'''
+	f = BookForm(request.POST)
+	new_book = f.save()
 	return HttpResponse("Book Added")
