@@ -15,18 +15,23 @@ def index(request):
 
 def libpage(request, lib_id):
     try: 
-        libary = Library.objects.get(id=lib_id)
+        library = Library.objects.get(id=lib_id)
     except Library.DoesNotExist:
         raise Http404
-    return HttpResponse("Library page for %s." % lib_id)
+    try:
+        topbook = Book.objects.filter(owner=library).order_by('hits')[::-1][0]
+    except Book.DoesNotExist:
+        raise Http404
+    return render(request, 'catalog/library.html', {'library':library, 'topbook':topbook})
 
 def bookpage(request, book_id):
     try:
         book = Book.objects.get(id=book_id)
+        book.hits += 1 # updates popularity based on web hits
+        book.save()
     except Book.DoesNotExist:
         raise Http404
-    #book = Book(title="Hello World", owner=Library(name="U-City"), isbn="10120330101")
-    return render(request, 'catalog/book.html', {'book': book})
+    return render(request, 'catalog/book.html', {'book':book})
 
 def add_book(request):
     f = BookForm(request.POST)

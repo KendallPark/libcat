@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% if library %}
+
+    {% block title %}Library Catalog: {{ library.name }}{% endblock %}
+    {% block sidebar %}{% endblock %}
+    {% block content %}
+    <h1>{{ library.name }}</h1>
+    <h3>Most Popular Book: {{ topbook.title }} by {{ topbook.author }}</h3>
+
+    {% endblock %}
+{% else %}
+    <h1>Oops!</h1>
+    <p>The library you're looking for doesn't seem to exist in our catalog. Please go back and try again.</p>
+{% endif %}

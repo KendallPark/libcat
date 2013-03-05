@@ -1,0 +1,12 @@
+TODO
+
+-Book and Library page views 
+ -includes "most popular book logic"
+-Admin panel page views
+-Add Book/Add Library forms + logic
+-Search
+-404 page
+-CSS Styling (prolly bootstrap)
+-HTML5 Validation (for bonus points?)
+-Corner case testing + possible refactoring/cleanup
+

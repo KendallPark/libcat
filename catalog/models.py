@@ -7,6 +7,7 @@ class Library(models.Model):
     def __unicode__(self):
         return unicode(self.name)
 
+
 class Book(models.Model):
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=200)
