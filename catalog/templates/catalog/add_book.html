@@ -2,16 +2,18 @@
 
 {% block title %}Library Catalog: Add Book{% endblock %}
     
-{% block sidebar %}{{ block.super }}{% endblock %}
-    
 {% block content %}
 
+<h2>Add Book</h2>
+
 {% if err %}
-    <p class="error">{{ err }}</p>
+	<div class="alert">
+    	{{ err }}
+	</div> <!-- .alert -->
 {% endif %}
 
 <form action="/catalog/add/book/submit/" method="post">{% csrf_token %}
     {{ bookform.as_p }}
-    <input type="submit" value="Add Book" />
+    <button type="submit" class="btn">Add Book</button>
 </form>
 {% endblock %}

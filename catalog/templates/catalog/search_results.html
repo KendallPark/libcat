@@ -2,8 +2,6 @@
 
 {% block title %}Library Catalog: Search Results for "{{q}}"{% endblock %}
     
-{% block sidebar %}{{ block.super }}{% endblock %}
-    
 {% block content %}
 
 <h2>Search results for: "{{q}}"</h2>
@@ -12,26 +10,22 @@
 	<p>No results found. Please try again.</p>
 {% else %}
 	<p>{{ books|length }} result(s) found.</p>
-	<ul class="booklist">
-		<li class="labels">
-			<ul>
-				<li>Title</li>
-				<li>Author</li>
-				<li>Library</li>
-				<li>Available for Interlibrary Loan?</li>
-			</ul>
-		</li>
+	<table class="booklist table">
+		<tr class="labels">
+			<th>Title</th>
+			<th>Author</th>
+			<th>Library</th>
+			<th>Available for Interlibrary Loan?</th>
+		</tr>
 		{% for book in books %}
-			<li>
-				<ul>
-					<li><a href="/catalog/book/{{book.id}}/">{{book.title}}</a></li>
-					<li>{{book.author}}</li>
-					<li><a href="/catalog/library/{{book.owner.id}}">{{book.owner.name}}</a></li>
-					<li>{% if book.loan %}Yes{% else %}No{% endif %}</li>
-				</ul>
-			</li>
+			<tr>
+				<td><a href="/catalog/book/{{book.id}}/">{{book.title}}</a></td>
+				<td>{{book.author}}</td>
+				<td><a href="/catalog/library/{{book.owner.id}}">{{book.owner.name}}</a></td>
+				<td>{% if book.loan %}Yes{% else %}No{% endif %}</td>
+			</tr>
 		{% endfor %}
-	</ul>
+	</table>
 {% endif %}
 
 {% endblock %}

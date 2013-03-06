@@ -1,17 +1,19 @@
 {% extends "base.html" %}
 
 {% block title %}Library Catalog: Add Library{% endblock %}
-    
-{% block sidebar %}{{ block.super }}{% endblock %}
-    
+        
 {% block content %}
 
+<h2>Add Library</h2>
+
 {% if err %}
-    <p class="error">{{ err }}</p>
+	<div class="alert">
+    	{{ err }}
+	</div> <!-- .alert -->
 {% endif %}
 
 <form action="/catalog/add/library/submit/" method="post">{% csrf_token %}
     {{ libform.as_p }}
-    <input type="submit" value="Add Library" />
+    <button class="btn" type="submit">Add Library</button>
 </form>
 {% endblock %}

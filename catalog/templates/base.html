@@ -1,34 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="{{STATIC_URL}}style.css" />
     <title>{% block title %}Library Catalog{% endblock %}</title>
 </head>
 
 <body>
-    <div id="sidebar">
-        {% block sidebar %}
-        <ul>
-            <li><a href="/catalog/">Home</a></li>
-            <li><a href="/catalog/add/book/">Add Book</a></li>
-            <li><a href="/catalog/add/library/">Add Library</a></li>
-        </ul>
-        <form id="search" action="/catalog/search/" method="get">
-            <input type="text" name="q" placeholder="Search books by title or ISBN"/>
-            <select name="lib">
-                <option value="0">All Libraries</option>
-                <option disabled>----</option>
-                {% for lib in libraries %}
-                    <option value="{{lib.id}}">{{lib.name}}</option>
-                {% endfor %}
-            </select>
-            <input type="submit" value="Search" />
-        </form>
-        {% endblock %}
-    </div>
+    <div class="container-fluid">
+        <div id="sidebar" class="row-fluid">
+            <div class="span12">
+                <nav>
+                <div class="navbar">
+                <div class="navbar-inner">
+                <ul class="nav">
+                    <li><a href="/catalog/">Home</a></li>
+                    <li><a href="/catalog/add/book/">Add Book</a></li>
+                    <li><a href="/catalog/add/library/">Add Library</a></li>
+                </ul>
+                <form id="search" class="navbar-form pull-right" action="/catalog/search/" method="get">
+                    <input class="search-query" type="text" name="q" placeholder="Search books by title or ISBN"/>
+                    <select name="lib">
+                        <option value="0">All Libraries</option>
+                        <option disabled>----</option>
+                        {% for lib in libraries %}
+                            <option value="{{lib.id}}">{{lib.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn">Search</button>
+                </form>
+                </div> <!-- .navbar-inner -->
+                </div> <!-- .navbar -->
+                </nav>
+            </div> <!-- .span12 -->
+        </div> <!-- #sidebar .row-fluid -->
 
-    <div id="content">
-        {% block content %}{% endblock %}
-    </div>
+        <div id="content" class="row-fluid">
+            <div class="span12">
+                {% block content %}{% endblock %}
+            </div> <!-- .span12 -->
+        </div>  <!-- #content .row-fluid -->
+    </div> <!-- .container -->
 </body>
 </html>
