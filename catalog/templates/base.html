@@ -14,7 +14,14 @@
             <li><a href="/catalog/add/library/">Add Library</a></li>
         </ul>
         <form id="search" action="/catalog/search/" method="get">
-            <input type="text" name="q" placeholder="Search by title or ISBN"/>
+            <input type="text" name="q" placeholder="Search books by title or ISBN"/>
+            <select name="lib">
+                <option value="0">All Libraries</option>
+                <option disabled>----</option>
+                {% for lib in libraries %}
+                    <option value="{{lib.id}}">{{lib.name}}</option>
+                {% endfor %}
+            </select>
             <input type="submit" value="Search" />
         </form>
         {% endblock %}

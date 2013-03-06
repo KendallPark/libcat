@@ -1,9 +1,17 @@
-{% if latest_book_list %}
-    <ul>
-    {% for book in latest_book_list %}
-        <li><a href="/catalog/{{ book.id }}/">{{ book.title }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No books are available.</p>
-{% endif %}
+{% extends "base.html" %}
+
+{% block title %}Library Catalog: Add Book{% endblock %}
+    
+{% block sidebar %}{{ block.super }}{% endblock %}
+    
+{% block content %}
+
+<h1>Welcome!</h1>
+<p>Hello! Welcome to the super-simple Library Catalog created by <a href="http://brokenshard.net">Kendall Park</a>!</p>
+<p>I didn't really feel like using PHP or Java, so I thought this would be a fun opportunity to teach myself the Django framework for Python (aka, the most beautiful programming language of all time). Django uses the typical MVC pattern and follows Python's "Don't repeat yourself" philosophy. I was impressed by the model layer's seamless abstraction of the underlying SQL database which saved me from much SQL tedium. This is my first Django app, so enjoy!</p>
+<p>Styling was done with Twitter's Bootstrap framework.</p>
+<h3>Some notes on design</h3>
+<p>The search takes both book titles and ISBN numbers, searching first for matching titles, then matching ISBNs if no results come up for titles. This was a design decision based on the safe assumption that no book will have an integer title exactly matching another book's ISBN number.</p>
+<p>It made more sense for a book object to have a library instance vs. the real-world convention a library having books. This saved the pain of a many-to-many relationship and having to guard against the case of multiple libraries laying claim to the same copy of a book.</p>
+<p>Each book is treated as an individual, even if all the fields contain the same data. This immitates how actual libraries function. Because ISBN numbers change each edition of a book, the chances of having the same ISBN numbers for the same book in a library are pretty low.</p>
+{% endblock %}

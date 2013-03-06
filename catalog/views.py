@@ -4,6 +4,14 @@ from django.shortcuts import render, get_object_or_404
 
 from catalog.models import Book, Library, BookForm, LibraryForm
 
+# Passes a list of libraries to every page for search dropdown
+def include_libraries(request):
+    try:
+        libraries = Library.objects.all
+    except Library.DoesNotExist:
+        raise Http404
+    return {'libraries':libraries}
+
 def index(request):
     lastest_book_list = Book.objects.order_by('isbn')[:5]
     template = loader.get_template('catalog/index.html')
@@ -67,9 +75,16 @@ def search(request):
     if 'q' in request.GET:
         q = request.GET['q']
     else:
-        return HttpResponse("No query")
+        return HttpResponse("No query.")
+    if 'lib' in request.GET:
+        lib = request.GET['lib']
+    else:
+        return HttpResponse("No query.")
     try:
-        books = Book.objects.filter(title__contains=q)
+        if int(lib):
+            books = Book.objects.all().filter(title__contains=q, owner__id=lib)
+        else:
+            books = Book.objects.all().filter(title__contains=q)
         print books
         if not books: # checks if there are no title results
             try:
